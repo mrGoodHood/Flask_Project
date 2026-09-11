@@ -37,8 +37,9 @@ def posts():
 
 @app.route('/posts/<int:id>')
 def post_detail(id):
-    article = Article.query.get(id)
+    article = db.get_or_404(Article, id)
     return render_template("post_detail.html", article=article)
+
 
 
 @app.route('/posts/<int:id>/del')
@@ -55,7 +56,7 @@ def post_delete(id):
 
 @app.route('/posts/<int:id>/update', methods=['POST', 'GET'])
 def post_update(id):
-    article = Article.query.get(id)
+    article = db.get_or_404(Article, id)
     if request.method == "POST":
         article.title = request.form['title']
         article.intro = request.form['intro']
